@@ -10,9 +10,9 @@ using namespace std;
 // for convenience
 using json = nlohmann::json;
 
-// Checks if the SocketIO event has JSON data.
-// If there is data the JSON object in string format will be returned,
-// else the empty string "" will be returned.
+// checks if the SocketIO event has JSON data
+// if there is data the JSON object in string format will be returned,
+// else the empty string "" will be returned
 std::string hasData(std::string s) {
   auto found_null = s.find("null");
   auto b1 = s.find_first_of("[");
@@ -26,11 +26,11 @@ std::string hasData(std::string s) {
   return "";
 }
 
-int main()
+int main(int argc, char** argv) 
 {
   uWS::Hub h;
 
-  // Create a Kalman Filter instance
+  // create a Kalman Filter instance
   FusionEKF fusionEKF;
 
   // used to compute the RMSE later
@@ -40,8 +40,8 @@ int main()
 
   h.onMessage([&fusionEKF,&tools,&estimations,&ground_truth](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
-    // The 4 signifies a websocket message
-    // The 2 signifies a websocket event
+    // the 4 signifies a websocket message
+    // the 2 signifies a websocket event
 
     if (length && length > 2 && data[0] == '4' && data[1] == '2')
     {
@@ -105,10 +105,10 @@ int main()
     	  gt_values(3) = vy_gt;
     	  ground_truth.push_back(gt_values);
           
-          //Call ProcessMeasurment(meas_package) for Kalman filter
+          // call ProcessMeasurment(meas_package) for Kalman filter
     	  fusionEKF.ProcessMeasurement(meas_package);    	  
 
-    	  //Push the current estimated x,y positon from the Kalman filter's state vector
+    	  // push the current estimated x,y positon from the Kalman filter's state vector
 
     	  VectorXd estimate(4);
 
@@ -147,7 +147,7 @@ int main()
 
   });
 
-  // We don't need this since we're not using HTTP but if it's removed the program
+  // we don't need this since we're not using HTTP but if it's removed the program
   // doesn't compile :-(
   h.onHttpRequest([](uWS::HttpResponse *res, uWS::HttpRequest req, char *data, size_t, size_t) {
     const std::string s = "<h1>Hello world!</h1>";

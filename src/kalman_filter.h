@@ -7,30 +7,19 @@ public:
 
   // state vector
   Eigen::VectorXd x_;
-
   // state covariance matrix
   Eigen::MatrixXd P_;
-
   // state transition matrix
   Eigen::MatrixXd F_;
-
   // process covariance matrix
   Eigen::MatrixXd Q_;
-
   // measurement matrix
   Eigen::MatrixXd H_;
-
   // measurement covariance matrix
   Eigen::MatrixXd R_;
 
-  /**
-   * Constructor
-   */
   KalmanFilter();
 
-  /**
-   * Destructor
-   */
   virtual ~KalmanFilter();
 
   /**
